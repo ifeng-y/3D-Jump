@@ -1,14 +1,14 @@
-import { _decorator, Component, Prefab, instantiate, Node, Label, CCInteger, Vec3 } from 'cc';
+import { _decorator, Component, Prefab, instantiate, Node, Label, CCInteger, Vec3, Button } from 'cc';
 import { PlayerController } from "./PlayerController";
 const { ccclass, property } = _decorator;
 
 // 赛道格子类型，坑（BT_NONE）或者实路（BT_STONE）
-enum BlockType{
+enum BlockType {
     BT_NONE,
     BT_STONE,
 };
 
-enum GameState{
+enum GameState {
     GS_INIT,
     GS_PLAYING,
     GS_END,
@@ -19,29 +19,74 @@ enum GameState{
 export class GameManager extends Component {
 
     // 赛道预制
-    @property({type: Prefab})
+    @property({ type: Prefab })
     public cubePrfb: Prefab | null = null;
     // 赛道长度
-    @property({type: CCInteger})
+    @property({ type: CCInteger })
     public roadLength: number = 50;
     private _road: BlockType[] = [];
     // 主界面根节点
-    @property({type: Node})
+    @property({ type: Node })
     public startMenu: Node | null = null;
     // 失败页面根节点
-    @property({type: Node})
+    @property({ type: Node })
     public failMenu: Node | null = null;
     // 成功页面根节点
-    @property({type: Node})
+    @property({ type: Node })
     public successMenu: Node | null = null;
     // 关联 Player 节点身上 PlayerController 组件
-    @property({type: PlayerController})
+    @property({ type: PlayerController })
     public playerCtrl: PlayerController | null = null;
     // 关联步长文本组件
-    @property({type: Label})
+    @property({ type: Label })
     public stepsLabel: Label | null = null!;
+    //用户选项选择 0-普通模式 1-限时模式 2-无尽模式
+    private userOption: number = 0;
+    //正常模式button
+    @property({ type: Button })
+    public normal: Button | null = null;
+    //限时模式button
+    @property({ type: Button })
+    public limited: Button | null = null;
+    //无尽模式button
+    @property({ type: Button })
+    public endless: Button | null = null;
 
-    start () {
+    //模式修改选择
+    onNormalButton() {
+        this.changeButtonColor(this.userOption);
+        this.userOption = 0;
+        this.normal.normalColor.set(255, 0, 0, 255);
+    }
+
+    onLimitedTimeButton() {
+        this.changeButtonColor(this.userOption);
+        this.userOption = 1;
+        this.limited.normalColor.set(255, 0, 0, 255);
+    }
+
+    onEndlessButton() {
+        this.changeButtonColor(this.userOption);
+        this.userOption = 2;
+        this.endless.normalColor.set(255, 0, 0, 255);
+    }
+
+
+    //修改相应按钮颜色
+    changeButtonColor(number: Number) {
+        if (number == 0) {
+            this.normal.normalColor.set(0, 164, 0, 255);
+            (this.normal as any)._updateState();
+        } else if (number == 1) {
+            this.limited.normalColor.set(0, 164, 0, 255);
+            (this.limited as any)._updateState();
+        } else if (number == 2) {
+            this.endless.normalColor.set(0, 164, 0, 255);
+            (this.endless as any)._updateState();
+        }
+    }
+
+    start() {
         this.curState = GameState.GS_INIT;
         this.playerCtrl?.node.on('JumpEnd', this.onPlayerJumpEnd, this);
     }
@@ -57,7 +102,7 @@ export class GameManager extends Component {
         }
         // 生成赛道
         this.generateRoad();
-        if(this.playerCtrl){
+        if (this.playerCtrl) {
             // 禁止接收用户操作人物移动指令
             this.playerCtrl.setInputActive(false);
             // 重置人物位置
@@ -67,12 +112,12 @@ export class GameManager extends Component {
         }
     }
 
-    set curState (value: GameState) {
-        switch(value) {
+    set curState(value: GameState) {
+        switch (value) {
             case GameState.GS_INIT:
                 this.init();
                 break;
-            case GameState.GS_PLAYING: 
+            case GameState.GS_PLAYING:
                 if (this.startMenu) {
                     this.startMenu.active = false;
                 }
@@ -82,7 +127,7 @@ export class GameManager extends Component {
                 }
                 // 会出现的现象就是，游戏开始的瞬间人物已经开始移动
                 // 因此，这里需要做延迟处理
-                setTimeout(() => { 
+                setTimeout(() => {
                     if (this.playerCtrl) {
                         this.playerCtrl.setInputActive(true);
                     }
@@ -112,7 +157,7 @@ export class GameManager extends Component {
         // 确定好每一格赛道类型
         for (let i = 1; i < this.roadLength - 1; i++) {
             // 如果上一格赛道是坑，那么这一格一定不能为坑
-            if (this._road[i-1] === BlockType.BT_NONE) {
+            if (this._road[i - 1] === BlockType.BT_NONE) {
                 this._road.push(BlockType.BT_STONE);
             } else {
                 this._road.push(Math.floor(Math.random() * 2));
@@ -124,17 +169,17 @@ export class GameManager extends Component {
         // 根据赛道类型生成赛道
         let linkedBlocks = 0;
         for (let j = 0; j < this._road.length; j++) {
-            if(this._road[j]) {
+            if (this._road[j]) {
                 ++linkedBlocks;
             }
-            if(this._road[j] == 0) {
-                if(linkedBlocks > 0) {
+            if (this._road[j] == 0) {
+                if (linkedBlocks > 0) {
                     this.spawnBlockByCount(j - 1, linkedBlocks);
                     linkedBlocks = 0;
                 }
-            }        
-            if(this._road.length == j + 1) {
-                if(linkedBlocks > 0) {
+            }
+            if (this._road.length == j + 1) {
+                if (linkedBlocks > 0) {
                     this.spawnBlockByCount(j, linkedBlocks);
                     linkedBlocks = 0;
                 }
@@ -143,8 +188,8 @@ export class GameManager extends Component {
     }
 
     spawnBlockByCount(lastPos: number, count: number) {
-        let block: Node|null = this.spawnBlockByType(BlockType.BT_STONE);
-        if(block) {
+        let block: Node | null = this.spawnBlockByType(BlockType.BT_STONE);
+        if (block) {
             this.node.addChild(block);
             block?.setScale(count, 1, 1);
             block?.setPosition(lastPos - (count - 1) * 0.5, -1.5, 0);
@@ -155,8 +200,8 @@ export class GameManager extends Component {
             return null;
         }
 
-        let block: Node|null = null;
-        switch(type) {
+        let block: Node | null = null;
+        switch (type) {
             case BlockType.BT_STONE:
                 block = instantiate(this.cubePrfb);
                 break;
@@ -170,7 +215,7 @@ export class GameManager extends Component {
         this.curState = GameState.GS_PLAYING;
     }
 
-    playAgain(){
+    playAgain() {
         this.curState = GameState.GS_INIT;
     }
 
@@ -182,7 +227,7 @@ export class GameManager extends Component {
                 // 禁止接收用户操作人物移动指令
                 this.playerCtrl.setInputActive(false);
             }
-        } else {    
+        } else {
             // 跳过了最大长度
             this.curState = GameState.GS_END;
             // 禁止接收用户操作人物移动指令
