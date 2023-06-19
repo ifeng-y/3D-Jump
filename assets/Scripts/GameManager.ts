@@ -15,6 +15,12 @@ enum GameState {
     GS_FAIL,
 };
 
+enum GameType {
+    NORMAL,
+    LIMIT_TIME,
+    END_LESS,
+}
+
 @ccclass("GameManager")
 export class GameManager extends Component {
 
@@ -25,6 +31,9 @@ export class GameManager extends Component {
     @property({ type: CCInteger })
     public roadLength: number = 50;
     private _road: BlockType[] = [];
+    // 初始化当前格子索引
+    public currentBlockIndex: number = 0;
+
     // 主界面根节点
     @property({ type: Node })
     public startMenu: Node | null = null;
@@ -40,8 +49,6 @@ export class GameManager extends Component {
     // 关联步长文本组件
     @property({ type: Label })
     public stepsLabel: Label | null = null!;
-    //用户选项选择 0-普通模式 1-限时模式 2-无尽模式
-    private userOption: number = 0;
     //正常模式button
     @property({ type: Button })
     public normal: Button | null = null;
@@ -51,24 +58,26 @@ export class GameManager extends Component {
     //无尽模式button
     @property({ type: Button })
     public endless: Button | null = null;
+    // 当前选择模式
+    public curGameType: GameType = GameType.NORMAL;
 
     //模式修改选择
     onNormalButton() {
-        this.changeButtonColor(this.userOption);
-        this.userOption = 0;
+        this.changeButtonColor(this.curGameType);
         this.normal.normalColor.set(255, 0, 0, 255);
+        this.curGameType = GameType.NORMAL;
     }
 
     onLimitedTimeButton() {
-        this.changeButtonColor(this.userOption);
-        this.userOption = 1;
+        this.changeButtonColor(this.curGameType);
         this.limited.normalColor.set(255, 0, 0, 255);
+        this.curGameType = GameType.LIMIT_TIME;
     }
 
     onEndlessButton() {
-        this.changeButtonColor(this.userOption);
-        this.userOption = 2;
+        this.changeButtonColor(this.curGameType);
         this.endless.normalColor.set(255, 0, 0, 255);
+        this.curGameType = GameType.END_LESS;
     }
 
 
@@ -92,6 +101,7 @@ export class GameManager extends Component {
     }
 
     init() {
+        debugger;
         if (this.failMenu || this.successMenu) {
             this.failMenu.active = false;
             this.successMenu.active = false;
@@ -151,6 +161,7 @@ export class GameManager extends Component {
         // 因此，需要移除旧赛道，清除旧赛道数据
         this.node.removeAllChildren();
         this._road = [];
+        this.currentBlockIndex = 0;
         // 确保游戏运行时，人物一定站在实路上
         this._road.push(BlockType.BT_STONE);
 
@@ -220,7 +231,7 @@ export class GameManager extends Component {
     }
 
     checkResult(moveIndex: number) {
-        if (moveIndex < this.roadLength - 1) {
+        if (moveIndex < this.roadLength - 1 || this.curGameType != GameType.NORMAL) {
             // 跳到了坑上
             if (this._road[moveIndex] == BlockType.BT_NONE) {
                 this.curState = GameState.GS_FAIL;
@@ -228,19 +239,78 @@ export class GameManager extends Component {
                 this.playerCtrl.setInputActive(false);
             }
         } else {
-            // 跳过了最大长度
-            this.curState = GameState.GS_END;
-            // 禁止接收用户操作人物移动指令
-            this.playerCtrl.setInputActive(false);
+            switch (this.curGameType) {
+                case GameType.NORMAL:
+                    // 处理普通模式的逻辑
+                    {
+                        // 跳过了最大长度
+                        this.curState = GameState.GS_END;
+                        // 禁止接收用户操作人物移动指令
+                        this.playerCtrl.setInputActive(false);
+                    }
+                    break;
+                // case GameType.LIMIT_TIME:
+                //     // 处理限时模式的逻辑
+                //     break;
+                // case GameType.END_LESS:
+                //     // 处理无尽模式的逻辑
+                //     break;
+            }
+
         }
     }
 
     onPlayerJumpEnd(moveIndex: number) {
         if (this.stepsLabel) {
-            // 因为在最后一步可能出现步伐大的跳跃，但是此时无论跳跃是步伐大还是步伐小都不应该多增加分数
-            this.stepsLabel.string = '' + (moveIndex >= this.roadLength ? this.roadLength : moveIndex);
+            if (this.curGameType === GameType.NORMAL) {
+                // 因为在最后一步可能出现步伐大的跳跃，但是此时无论跳跃是步伐大还是步伐小都不应该多增加分数
+                this.stepsLabel.string = '' + (moveIndex >= this.roadLength ? this.roadLength : moveIndex);
+            } else {
+                this.stepsLabel.string = '' + moveIndex;
+            }
         }
         // 检查当前下落道路的类型，获取结果
         this.checkResult(moveIndex);
+
+        // 非普通模式下
+        if (this.curGameType != GameType.NORMAL) {
+            this.deleteOldCube(moveIndex);
+            this.refreshCube(moveIndex);
+            if (this.playerCtrl._jumpStep === 2) {
+                this.refreshCube(moveIndex);
+            }
+        }
+    }
+
+    refreshCube(moveIndex: number) {
+        // 非普通模式下，当移动到当前格子索引大于25时
+        if (moveIndex >= 25) {
+            // 更新当前格子索引
+            this.currentBlockIndex++;
+
+            // 添加新格子
+            let blockType: number; // 随机生成块类型，0 表示坑，1 表示石头
+            if (this._road[this._road.length - 1] === BlockType.BT_NONE) {
+                blockType = BlockType.BT_STONE;
+            } else {
+                blockType = Math.floor(Math.random() * 2);
+            }
+            this._road.push(blockType);
+            const block = this.spawnBlockByType(blockType);
+            if (block) {
+                this.node.addChild(block);
+                block.setPosition(this.roadLength + this.currentBlockIndex - 1, -1.5, 0);
+            }
+        }
+    }
+
+    deleteOldCube(moveIndex: number) {
+        // 删除前面的格子
+        if (this._road[moveIndex - 25] === BlockType.BT_STONE) {
+            const firstBlock = this.node.children[0];
+            if (firstBlock) {
+                firstBlock.destroy();
+            }
+        }
     }
 }

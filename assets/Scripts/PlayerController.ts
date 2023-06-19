@@ -12,12 +12,13 @@ export class PlayerController extends Component {
 
     @property({type: Animation})
     public BodyAnim: Animation|null = null;
+
     // @property({type: SkeletalAnimation})
     // public CocosAnim: SkeletalAnimation|null = null;
 
     // for fake tween
     private _startJump: boolean = false;
-    private _jumpStep: number = 0;
+    public _jumpStep: number = 0;
     private _curJumpTime: number = 0;
     private _jumpTime: number = 0.3;
     private _curJumpSpeed: number = 0;
