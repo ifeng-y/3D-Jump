@@ -59,7 +59,7 @@ export class GameManager extends Component {
     @property({ type: Button })
     public endless: Button | null = null;
     // 当前选择模式
-    public curGameType: GameType = GameType.NORMAL;
+    public curGameType: GameType | null = null;
 
     //模式修改选择
     onNormalButton() {
@@ -101,7 +101,6 @@ export class GameManager extends Component {
     }
 
     init() {
-        debugger;
         if (this.failMenu || this.successMenu) {
             this.failMenu.active = false;
             this.successMenu.active = false;
@@ -109,6 +108,11 @@ export class GameManager extends Component {
         // 激活主界面
         if (this.startMenu) {
             this.startMenu.active = true;
+        }
+        if (!this.curGameType){
+            //初始化模式：普通模式
+            this.normal.normalColor.set(255, 0, 0, 255);
+            this.curGameType = GameType.NORMAL;
         }
         // 生成赛道
         this.generateRoad();
@@ -133,7 +137,7 @@ export class GameManager extends Component {
                 }
 
                 if (this.stepsLabel) {
-                    this.stepsLabel.string = '0';   // 将步数重置为0
+                    this.stepsLabel.string = '得分：'+'0';   // 将步数重置为0
                 }
                 // 会出现的现象就是，游戏开始的瞬间人物已经开始移动
                 // 因此，这里需要做延迟处理
@@ -264,9 +268,9 @@ export class GameManager extends Component {
         if (this.stepsLabel) {
             if (this.curGameType === GameType.NORMAL) {
                 // 因为在最后一步可能出现步伐大的跳跃，但是此时无论跳跃是步伐大还是步伐小都不应该多增加分数
-                this.stepsLabel.string = '' + (moveIndex >= this.roadLength ? this.roadLength : moveIndex);
+                this.stepsLabel.string = '得分：' + (moveIndex >= this.roadLength ? this.roadLength : moveIndex);
             } else {
-                this.stepsLabel.string = '' + moveIndex;
+                this.stepsLabel.string = '得分：' + moveIndex;
             }
         }
         // 检查当前下落道路的类型，获取结果
