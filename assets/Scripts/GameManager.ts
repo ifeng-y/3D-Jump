@@ -59,6 +59,8 @@ export class GameManager extends Component {
     @property({ type: Button })
     public endless: Button | null = null;
     // 当前选择模式
+    public curGameType: GameType | null = null;
+
     @property({ type: CCInteger })
     private limiteTime: number = 15;
     private timestamp: number = 0;
