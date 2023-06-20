@@ -62,6 +62,7 @@ export class GameManager extends Component {
     @property({ type: CCInteger })
     private limiteTime: number = 15;
     private timestamp: number = 0;
+    public curGameType: GameType | null = null;
 
     //模式修改选择
     onNormalButton() {
@@ -121,7 +122,7 @@ export class GameManager extends Component {
         if (this.startMenu) {
             this.startMenu.active = true;
         }
-        if (!this.curGameType){
+        if (!this.curGameType) {
             //初始化模式：普通模式
             this.normal.normalColor.set(255, 0, 0, 255);
             this.curGameType = GameType.NORMAL;
@@ -149,7 +150,7 @@ export class GameManager extends Component {
                 }
 
                 if (this.stepsLabel) {
-                    this.stepsLabel.string = '得分：'+'0';   // 将步数重置为0
+                    this.stepsLabel.string = '得分：' + '0';   // 将步数重置为0
                 }
                 // 会出现的现象就是，游戏开始的瞬间人物已经开始移动
                 // 因此，这里需要做延迟处理
@@ -271,24 +272,12 @@ export class GameManager extends Component {
                 this.playerCtrl.setInputActive(false);
             }
         } else {
-            switch (this.curGameType) {
-                case GameType.NORMAL:
-                    // 处理普通模式的逻辑
-                    {
-                        // 跳过了最大长度
-                        this.curState = GameState.GS_END;
-                        // 禁止接收用户操作人物移动指令
-                        this.playerCtrl.setInputActive(false);
-                    }
-                    break;
-                // case GameType.LIMIT_TIME:
-                //     // 处理限时模式的逻辑
-                //     break;
-                // case GameType.END_LESS:
-                //     // 处理无尽模式的逻辑
-                //     break;
+            if (this.curGameType === GameType.NORMAL) {
+                // 跳过了最大长度
+                this.curState = GameState.GS_END;
+                // 禁止接收用户操作人物移动指令
+                this.playerCtrl.setInputActive(false);
             }
-
         }
     }
 
@@ -305,7 +294,7 @@ export class GameManager extends Component {
         this.checkResult(moveIndex);
 
         // 非普通模式下
-        if (this.curGameType === GameType.NORMAL) {
+        if (this.curGameType != GameType.NORMAL) {
             this.deleteOldCube(moveIndex);
             this.refreshCube(moveIndex);
             if (this.playerCtrl._jumpStep === 2) {
