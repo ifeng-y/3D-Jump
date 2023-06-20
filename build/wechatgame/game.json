@@ -1,0 +1,23 @@
+{
+    "deviceOrientation": "landscapeRight",
+    "networkTimeout": {
+        "request": 5000,
+        "connectSocket": 5000,
+        "uploadFile": 5000,
+        "downloadFile": 500000
+    },
+    "subpackages": [
+        {
+            "name": "internal",
+            "root": "subpackages/internal/"
+        },
+        {
+            "name": "main",
+            "root": "subpackages/main/"
+        },
+        {
+            "name": "Soldiers 3D Models",
+            "root": "subpackages/Soldiers 3D Models/"
+        }
+    ]
+}

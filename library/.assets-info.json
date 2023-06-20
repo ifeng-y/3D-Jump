@@ -1,0 +1,210 @@
+{
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Animations": {
+    "time": 1687162104532.034,
+    "uuid": "1963f2b3-b6ac-4b6a-b013-663016563d4b",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Prefabs": {
+    "time": 1687162104533.0354,
+    "uuid": "4118c3ec-f3a1-4357-9f7a-b6891b0a33a5",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Scripts": {
+    "time": 1687162357242.3652,
+    "uuid": "1d2af58f-35ab-4b16-a951-81cf678ba38b",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models": {
+    "time": 1687162104536.0366,
+    "uuid": "a43b5b46-e3cb-4f53-90b9-8a455bc2e0c1",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax": {
+    "time": 1687162104538.0356,
+    "uuid": "68a88c71-9937-4a6b-bb83-cc8991c698f5",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman": {
+    "time": 1687162104541.0366,
+    "uuid": "d7d2656b-e760-48ce-98d3-02110a116943",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Scripts\\PlayerController.ts": {
+    "time": 1687179273455.597,
+    "uuid": "d09edb76-2044-482c-9e2b-b5f6c7079ae7",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Animations.meta": {
+    "time": 1687162104532.034
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Prefabs.meta": {
+    "time": 1687162104533.0354
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Scripts.meta": {
+    "time": 1687162104535.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models.meta": {
+    "time": 1687162104535.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax.meta": {
+    "time": 1687162104534.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman.meta": {
+    "time": 1687162104536.0366
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Scripts\\PlayerController.ts.meta": {
+    "time": 1687162104535.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\scene.scene": {
+    "time": 1687179566702.1956,
+    "uuid": "235d0c8c-0cc5-4009-ba82-25c69278ff58",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Animations\\oneStep.anim": {
+    "time": 1687162104532.034,
+    "uuid": "9afc6386-cf2b-448f-9730-5da9ab9b57ab",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Animations\\twoStep.anim": {
+    "time": 1687162104532.034,
+    "uuid": "4b7fa905-8a97-447f-a1dd-76623edd8b6c",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Prefabs\\Cube.prefab": {
+    "time": 1687162104533.0354,
+    "uuid": "60824a78-8dbf-4a1e-a44e-d6af18e7fb53",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman01.jpg": {
+    "time": 1687162104536.0366,
+    "uuid": "06b16e0b-71be-4bb2-bb30-57c83c11c7f6",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman01.max": {
+    "time": 1687162104539.036,
+    "uuid": "245e7926-46d7-4fca-ba9c-3811c1d6efef",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman02.jpg": {
+    "time": 1687162104537.0356,
+    "uuid": "a8d9d9b6-ae82-42d0-8dc6-c16f913abff7",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman03.jpg": {
+    "time": 1687162104538.0356,
+    "uuid": "7c55b90b-f5d3-4db1-a71e-082958fca8b8",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman-blue.prefab": {
+    "time": 1687162104537.0356,
+    "uuid": "3cdf70a1-f398-49dd-b0da-2c949258d35b",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman-red.prefab": {
+    "time": 1687162104537.0356,
+    "uuid": "e8dad32e-051a-4bf5-aed3-67ea4af180f1",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman-yellow.prefab": {
+    "time": 1687162104538.0356,
+    "uuid": "6db98527-5e62-4826-9a7a-d514390f33eb",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman01.FBX": {
+    "time": 1687162104539.036,
+    "uuid": "5f35effe-a1a1-4c6a-8a36-5ad85ff66628",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman01.jpg": {
+    "time": 1687162104540.0366,
+    "uuid": "a1667115-7cf0-4d17-861f-4af0f1c68397",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman02.jpg": {
+    "time": 1687162104540.0366,
+    "uuid": "2bb0eaff-dd9e-4e51-b08b-f4d0b2f70c9d",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman03.jpg": {
+    "time": 1687162104541.0366,
+    "uuid": "2f42077d-b0f5-40f8-bb43-8a4c5466cf38",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\blue.mtl": {
+    "time": 1687162104539.036,
+    "uuid": "ba345a4b-7f0c-4a4c-b1df-294957335979",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\red.mtl": {
+    "time": 1687162104539.036,
+    "uuid": "946b6349-0fc5-43f2-a0c1-63076e3ee62e",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\yellow.mtl": {
+    "time": 1687162104540.0366,
+    "uuid": "b7e155ee-d170-4f1d-b5b2-8d72d2312a12",
+    "missing": false
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Animations\\twoStep.anim.meta": {
+    "time": 1687162104532.034
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Prefabs\\Cube.prefab.meta": {
+    "time": 1687162104533.0354
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Animations\\oneStep.anim.meta": {
+    "time": 1687162104532.034
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\scene.scene.meta": {
+    "time": 1687162104533.0354
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman-blue.prefab.meta": {
+    "time": 1687162104538.0356
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman01.jpg.meta": {
+    "time": 1687162104536.0366
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman01.max.meta": {
+    "time": 1687162104536.0366
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman-yellow.prefab.meta": {
+    "time": 1687162104538.0356
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman-red.prefab.meta": {
+    "time": 1687162104538.0356
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman02.jpg.meta": {
+    "time": 1687162104536.0366
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\3dmax\\altman03.jpg.meta": {
+    "time": 1687162104536.0366
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\blue.mtl.meta": {
+    "time": 1687162104539.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\red.mtl.meta": {
+    "time": 1687162104539.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\yellow.mtl.meta": {
+    "time": 1687162104540.0366
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman02.jpg.meta": {
+    "time": 1687162104539.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman01.jpg.meta": {
+    "time": 1687162104538.0356
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman03.jpg.meta": {
+    "time": 1687162104539.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Soldiers 3D Models\\altman\\altman01.FBX.meta": {
+    "time": 1687162104538.0356
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Scripts\\GameManager.ts.meta": {
+    "time": 1687162104535.036
+  },
+  "E:\\workspace\\CocosDashBoard\\3D-Jump\\assets\\Scripts\\GameManager.ts": {
+    "time": 1687179459795.249,
+    "uuid": "e1546773-f825-4035-83c6-2cca062058de",
+    "missing": false
+  }
+}
