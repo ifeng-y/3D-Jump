@@ -127,11 +127,8 @@ export class GameManager extends Component {
     }
 
     init() {
-        if (this.failMenu || this.successMenu) {
-            this.failMenu.active = false;
-            this.successMenu.active = false;
-            this.successFoeMode.active = false;
-        }
+        // 关闭其他页面
+        this.closeOtherMenu();
         // 激活主界面
         if (this.startMenu) {
             this.startMenu.active = true;
@@ -190,11 +187,10 @@ export class GameManager extends Component {
                 }
                 break;
             case GameState.GS_END:
-                if (this.successMenu && this.curGameType != GameType.LIMIT_TIME) {
-                    this.successMenu.active = true;
-                }
-                if (!this.successFoeMode.active && this.curGameType === GameType.LIMIT_TIME) {
+                if (this.curGameType === GameType.LIMIT_TIME) {
                     this.successFoeMode.active = true;
+                } else if (this.successMenu) {
+                    this.successMenu.active = true;
                 }
                 break;
             case GameState.GS_FAIL:
@@ -354,6 +350,18 @@ export class GameManager extends Component {
             if (firstBlock) {
                 firstBlock.destroy();
             }
+        }
+    }
+
+    closeOtherMenu() {
+        if (this.failMenu) {
+            this.failMenu.active = false;
+        }
+        if (this.successMenu) {
+            this.successMenu.active = false;
+        }
+        if (this.successFoeMode) {
+            this.successFoeMode.active = false;
         }
     }
 }
