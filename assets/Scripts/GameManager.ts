@@ -116,7 +116,7 @@ export class GameManager extends Component {
 
     limite() {
         let nowTime: number = Date.now();
-        if (nowTime - this.timestamp > this.limiteTime * 1000 && !this.failMenu.active && !this.successMenu.active) {
+        if (nowTime - this.timestamp > this.limiteTime * 1000) {
             //限时时间到了
             this.curState = GameState.GS_END;
             // 禁止接收用户操作人物移动指令
@@ -180,7 +180,7 @@ export class GameManager extends Component {
                     // 以秒为单位的时间间隔
                     let interval = 1;
                     // 重复次数
-                    let repeat = this.limiteTime + 5;
+                    let repeat = this.limiteTime - 1;
                     // 开始延时
                     let delay = 0;
                     this.schedule(function () {
@@ -193,7 +193,7 @@ export class GameManager extends Component {
                 if (this.successMenu && this.curGameType != GameType.LIMIT_TIME) {
                     this.successMenu.active = true;
                 }
-                if (this.successFoeMode && this.curGameType === GameType.LIMIT_TIME) {
+                if (!this.successFoeMode.active && this.curGameType === GameType.LIMIT_TIME) {
                     this.successFoeMode.active = true;
                 }
                 break;
