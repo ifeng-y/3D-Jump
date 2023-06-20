@@ -1,5 +1,6 @@
 import { _decorator, Component, Prefab, instantiate, Node, Label, CCInteger, Vec3, Button } from 'cc';
 import { PlayerController } from "./PlayerController";
+import { TimerManager } from './TimerManager';
 const { ccclass, property } = _decorator;
 
 // 赛道格子类型，坑（BT_NONE）或者实路（BT_STONE）
@@ -65,6 +66,15 @@ export class GameManager extends Component {
     private limiteTime: number = 15;
     private timestamp: number = 0;
 
+    @property({ type: TimerManager })
+    private timemanager: TimerManager = null;
+
+    @property({ type: Label })
+    private successLabel: Label | null = null;
+
+    @property({ type: Node })
+    public successFoeMode: Node | null = null;
+
     //模式修改选择
     onNormalButton() {
         this.changeButtonColor(this.curGameType);
@@ -108,9 +118,11 @@ export class GameManager extends Component {
         let nowTime: number = Date.now();
         if (nowTime - this.timestamp > this.limiteTime * 1000 && !this.failMenu.active && !this.successMenu.active) {
             //限时时间到了
-            this.curState = GameState.GS_FAIL;
+            this.curState = GameState.GS_END;
             // 禁止接收用户操作人物移动指令
             this.playerCtrl.setInputActive(false);
+            this.timemanager.start();
+            this.successLabel.string = "本次" + this.stepsLabel.string;
         }
     }
 
@@ -118,6 +130,7 @@ export class GameManager extends Component {
         if (this.failMenu || this.successMenu) {
             this.failMenu.active = false;
             this.successMenu.active = false;
+            this.successFoeMode.active = false;
         }
         // 激活主界面
         if (this.startMenu) {
@@ -163,6 +176,7 @@ export class GameManager extends Component {
                 //重置比赛开始的时间戳
                 this.timestamp = Date.now();
                 if (this.curGameType === GameType.LIMIT_TIME) {
+                    this.timemanager.startLimitTime(this.timestamp + this.limiteTime * 1000);
                     // 以秒为单位的时间间隔
                     let interval = 1;
                     // 重复次数
@@ -176,8 +190,11 @@ export class GameManager extends Component {
                 }
                 break;
             case GameState.GS_END:
-                if (this.successMenu) {
+                if (this.successMenu && this.curGameType != GameType.LIMIT_TIME) {
                     this.successMenu.active = true;
+                }
+                if (this.successFoeMode && this.curGameType === GameType.LIMIT_TIME) {
+                    this.successFoeMode.active = true;
                 }
                 break;
             case GameState.GS_FAIL:
@@ -271,6 +288,10 @@ export class GameManager extends Component {
                 this.curState = GameState.GS_FAIL;
                 // 禁止接收用户操作人物移动指令
                 this.playerCtrl.setInputActive(false);
+                if (this.curGameType === GameType.LIMIT_TIME) {
+                    this.timemanager.unscheduleAllCallbacks();
+                    this.timemanager.start();
+                }
             }
         } else {
             if (this.curGameType === GameType.NORMAL) {
