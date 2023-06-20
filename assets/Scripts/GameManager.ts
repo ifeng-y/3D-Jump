@@ -59,7 +59,9 @@ export class GameManager extends Component {
     @property({ type: Button })
     public endless: Button | null = null;
     // 当前选择模式
-    public curGameType: GameType | null = null;
+    @property({ type: CCInteger })
+    private limiteTime: number = 15;
+    private timestamp: number = 0;
 
     //模式修改选择
     onNormalButton() {
@@ -98,6 +100,16 @@ export class GameManager extends Component {
     start() {
         this.curState = GameState.GS_INIT;
         this.playerCtrl?.node.on('JumpEnd', this.onPlayerJumpEnd, this);
+    }
+
+    limite() {
+        let nowTime: number = Date.now();
+        if (nowTime - this.timestamp > this.limiteTime * 1000 && !this.failMenu.active && !this.successMenu.active) {
+            //限时时间到了
+            this.curState = GameState.GS_FAIL;
+            // 禁止接收用户操作人物移动指令
+            this.playerCtrl.setInputActive(false);
+        }
     }
 
     init() {
@@ -146,6 +158,20 @@ export class GameManager extends Component {
                         this.playerCtrl.setInputActive(true);
                     }
                 }, 0.1);
+                //重置比赛开始的时间戳
+                this.timestamp = Date.now();
+                if (this.curGameType === GameType.LIMIT_TIME) {
+                    // 以秒为单位的时间间隔
+                    let interval = 1;
+                    // 重复次数
+                    let repeat = this.limiteTime + 5;
+                    // 开始延时
+                    let delay = 0;
+                    this.schedule(function () {
+                        // 这里的 this 指向 component
+                        this.limite();
+                    }, interval, repeat, delay);
+                }
                 break;
             case GameState.GS_END:
                 if (this.successMenu) {
@@ -153,6 +179,8 @@ export class GameManager extends Component {
                 }
                 break;
             case GameState.GS_FAIL:
+                //取消所有计时器
+                this.unscheduleAllCallbacks();
                 if (this.failMenu) {
                     this.failMenu.active = true;
                 }
@@ -277,7 +305,7 @@ export class GameManager extends Component {
         this.checkResult(moveIndex);
 
         // 非普通模式下
-        if (this.curGameType != GameType.NORMAL) {
+        if (this.curGameType === GameType.NORMAL) {
             this.deleteOldCube(moveIndex);
             this.refreshCube(moveIndex);
             if (this.playerCtrl._jumpStep === 2) {
