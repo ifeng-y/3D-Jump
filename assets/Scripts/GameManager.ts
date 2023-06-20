@@ -64,7 +64,6 @@ export class GameManager extends Component {
     @property({ type: CCInteger })
     private limiteTime: number = 15;
     private timestamp: number = 0;
-    public curGameType: GameType | null = null;
 
     //模式修改选择
     onNormalButton() {
